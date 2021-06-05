@@ -45,6 +45,7 @@ def main():
     #system("cls")
     #enumeracionExhaustivaPoliticas(estados,estados_decisiones, cij, k, tipo)
     #solucionPorProgramacionLineal(estados,estados_decisiones, cij, k, tipo)
-
+    #mejoramientoPoliticas(estados,estados_decisiones, cij, k, tipo)
+    #mejoramientoPoliticasDescuento(estados,estados_decisiones, cij, k, tipo,0.9)
 if __name__ == "__main__":
     main()
