@@ -16,4 +16,17 @@ _(()_Procesos Markovianos de Decisión_\_V_
 ║ ■ Romero Mora Diego                   ║
 ║ ■ Serratos Martínez Camilo            ║
 ╚═══════════════════════════════════════╝""", end="")
-    time.sleep(2)
+
+def eleccion():
+    print("""
+╔════════════════════════════════════════════════════════════╗
+║                    >>>> ALGORITMOS <<<<                    ║
+╠════════════════════════════════════════════════════════════╣
+║ 1)  Recolectar datos                                       ║
+║ 2)  Solución por enumeración exhaustiva de políticas       ║
+║ 3)  Solución por programación lineal                       ║
+║ 4)  Solución por mejoramiento de políticas                 ║
+║ 5)  Solución por mejoramiento de políticas con descuento   ║
+║ 6)  Solución por aproximaciones sucesivas                  ║
+║ 7)  Salir                                                  ║
+╚════════════════════════════════════════════════════════════╝""", end="")

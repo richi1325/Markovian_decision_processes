@@ -245,3 +245,74 @@ def mejoramientoPoliticasDescuento(estados, estados_decisiones, cij, data, tipo,
         else: 
             print(f"\nNueva política: {politica_optima}")
             politica_inicial = politica_optima
+    
+def aproximacionesSucesivas(estados, estados_decisiones, cij, data, tipo,alpha=1,iteraciones=10, epsilon=0.01):
+    #Paso 1
+    iteracion = 1
+    estado = 0
+    vs = []
+    decisionv = []
+    for elemento in estados_decisiones:     
+        pivote = None
+        valor_pivote = None
+        for index in elemento:
+            if tipo == "MAX" :
+                if pivote == None:
+                    pivote = index
+                    valor_pivote = cij[estado][index-1]
+                if valor_pivote<cij[estado][index-1]:
+                    pivote = index
+                    valor_pivote = cij[estado][index-1]
+            else :
+                if pivote == None:
+                    pivote = index
+                    valor_pivote = cij[estado][index-1]
+                if valor_pivote>cij[estado][index-1]:
+                    pivote = index
+                    valor_pivote = cij[estado][index-1]
+        vs.append(valor_pivote)
+        decisionv.append(pivote)
+        estado+=1
+    
+    #Paso 2
+    print("\nPrimera iteración:")
+    print("V =",vs)
+    print("R =",decisionv)
+    for n in range(2,iteraciones+1):
+        estado = 0
+        vsi = []
+        decisionvi = []
+        for elemento in estados_decisiones:     
+            pivote = None
+            valor_pivote = None
+            for index in elemento:
+                ld = reduce(lambda x,y : x+y, map(lambda x: data[index][estado][x]*vs[x] ,estados))
+                if tipo == "MAX" :
+                    if pivote == None:
+                        pivote = index
+                        valor_pivote = cij[estado][index-1] + alpha * ld
+                    if valor_pivote<cij[estado][index-1] + alpha * ld:
+                        pivote = index
+                        valor_pivote = cij[estado][index-1] + alpha * ld
+                else :
+                    if pivote == None:
+                        pivote = index
+                        valor_pivote = cij[estado][index-1] + alpha * ld
+                    if valor_pivote>cij[estado][index-1] + alpha * ld:
+                        pivote = index
+                        valor_pivote = cij[estado][index-1] + alpha * ld
+            vsi.append(valor_pivote)
+            decisionvi.append(pivote)
+            estado+=1
+        if abs(vs[0]-vsi[0])<epsilon:
+            print("\nTerminado por error")
+            print(f"ε = {abs(vs[0]-vsi[0])}")
+            print(f"n = {n}")
+            break
+        vs = vsi
+        decisionv = decisionvi
+    if n == iteraciones:
+        print("\nTerminado por iteraciones")
+    print(f"\n>>>    Política óptima    <<<")
+    print(f"V^{n} = ",vsi)
+    print(f"R_{n} = ",decisionvi,"\n")
