@@ -304,15 +304,18 @@ def aproximacionesSucesivas(estados, estados_decisiones, cij, data, tipo,alpha=1
             vsi.append(valor_pivote)
             decisionvi.append(pivote)
             estado+=1
-        if abs(vs[0]-vsi[0])<epsilon:
-            print("\nTerminado por error")
-            print(f"ε = {abs(vs[0]-vsi[0])}")
-            print(f"n = {n}")
+        if max(abs(np.array(vs)-np.array(vsi)))<=epsilon:
+            print("\nTERMINADO POR ERRORES")
             break
-        vs = vsi
-        decisionv = decisionvi
+        if n<iteraciones:
+            vs = vsi
+            decisionv = decisionvi
     if n == iteraciones:
-        print("\nTerminado por iteraciones")
-    print(f"\n>>>    Política óptima    <<<")
+        print("\nTERMINADO POR ITERTACIONES")
+    print('\n^^^    Política previa    ^^^\n')
+    print(f"V^{n-1} = ",vs)
+    print(f"R_{n-1} = ",decisionv,"\n")
+    print(f"\n>>>    Política óptima    <<<\n")
     print(f"V^{n} = ",vsi)
     print(f"R_{n} = ",decisionvi,"\n")
+    print(f"ε = {abs(np.array(vs)-np.array(vsi)).round(4)}")
